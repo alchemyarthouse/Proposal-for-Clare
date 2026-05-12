@@ -528,6 +528,61 @@
     line-height: 1.8;
   }
 
+  /* BUTTONS */
+  .btn {
+    display: block;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 32px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    width: 100%;
+    text-align: center;
+    margin-top: 36px;
+  }
+
+  .btn:hover {
+    background: #c94008;
+    transform: translateY(-1px);
+  }
+
+  .btn:active { transform: translateY(0); }
+
+  .btn-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 40px;
+    border: 1px solid var(--accent);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  }
+
+  .btn-outline:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
   /* CTA */
   .cta-section {
     padding: 120px 60px;
@@ -647,6 +702,8 @@
     .section-label { font-size: 10px; }
     /* Retainer note mobile */
     div[style*="padding:40px 52px"] { padding: 28px 20px !important; flex-direction: column; gap: 16px; }
+    .btn-outline { width: 100%; text-align: center; padding: 18px 24px; }
+    .cta-buttons { flex-direction: column; align-items: stretch; }
   }
 
   @media (max-width: 400px) {
@@ -765,6 +822,7 @@
         <li>10 aesthetic images. Carousels and still imagery. Editorial quality. On-brand and ready to post.</li>
         <li>Instagram bio copy and profile optimisation notes.</li>
       </ul>
+      <a href="https://buy.stripe.com/6oU28rePx6M87vagNh8og09" target="_blank" class="btn">Get started — $1,000 AUD</a>
     </div>
 
     <!-- TIER 2 -->
@@ -784,6 +842,7 @@
         <li>Content direction guide. Three pillars, caption framework, posting rhythm, and what to save for a future paid offer.</li>
         <li>Content ritual guide (one page). How to batch a week of content in two hours. Built for your life, not a social media manager's.</li>
       </ul>
+      <a href="https://buy.stripe.com/8x2aEX0YH9Yk8ze0Oj8og0a" target="_blank" class="btn">Get started — $2,000 AUD</a>
     </div>
 
   </div>
@@ -885,7 +944,11 @@
 <section class="cta-section reveal">
   <div class="section-label" style="justify-content:center;">Ready when you are</div>
   <h2>The world is not going to build itself.</h2>
-  <p>Reply to this proposal or reach out directly. We will lock in your discovery session and get moving.</p>
+  <p>Choose your tier below and pay securely via Stripe. Your discovery session gets booked immediately after.</p>
+  <div class="cta-buttons">
+    <a href="https://buy.stripe.com/6oU28rePx6M87vagNh8og09" target="_blank" class="btn-outline">Brand Foundation — $1,000</a>
+    <a href="https://buy.stripe.com/8x2aEX0YH9Yk8ze0Oj8og0a" target="_blank" class="btn-outline">Brand Launch — $2,000</a>
+  </div>
   <div class="cta-contact">hello@alchemyart.house</div>
   <div style="margin-top:60px; font-family:'DM Mono',monospace; font-size:14px; color:var(--text-muted); letter-spacing:0.05em;">✦ &nbsp; Alchemy ArtHouse &nbsp; ✦ &nbsp; Byron Bay, NSW &nbsp; ✦ &nbsp; alchemyarthouse.com</div>
 </section>
