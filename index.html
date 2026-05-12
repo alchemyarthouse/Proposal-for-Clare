@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clare — Reclaiming Agency × Alchemy ArtHouse</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a09;
+    --bg2: #111110;
+    --bg3: #181816;
+    --accent: #E8520A;
+    --text: #F2F2F0;
+    --text-muted: #8a8a84;
+    --border: rgba(242,242,240,0.08);
+    --border-accent: rgba(232,82,10,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.8s ease forwards;
+  }
+
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .logo span {
+    color: var(--accent);
+  }
+
+  .header-glyph {
+    font-size: 18px;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 60px 100px;
+    max-width: 960px;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-label::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  .hero h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0 60px;
+    width: calc(100% - 120px);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 60px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '✦';
+    font-size: 10px;
+  }
+
+  /* INTRO / LETTER */
+  .letter {
+    max-width: 720px;
+  }
+
+  .letter p {
+    font-size: 18px;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .letter p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .letter p em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* DREAM VISION */
+  .vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .vision-card {
+    background: var(--bg2);
+    padding: 48px 44px;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vision-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+
+  .vision-card:hover::before {
+    height: 100%;
+  }
+
+  .vision-card:hover {
+    border-color: var(--border-accent);
+  }
+
+  .vision-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+  }
+
+  .vision-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .vision-card p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* PROBLEM/SOLUTION SPLIT */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .split-block h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .split-block p {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.9;
+    margin-bottom: 20px;
+  }
+
+  .split-divider {
+    width: 1px;
+    background: var(--border);
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .split-divider::after {
+    content: '✦';
+    position: absolute;
+    color: var(--accent);
+    font-size: 12px;
+    background: var(--bg);
+    padding: 8px 0;
+  }
+
+  /* QUOTE BLOCK */
+  .quote-block {
+    background: var(--bg2);
+    border-left: 2px solid var(--accent);
+    padding: 48px 60px;
+    margin: 0;
+  }
+
+  .quote-block blockquote {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 800px;
+  }
+
+  .quote-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-top: 24px;
+    text-transform: uppercase;
+  }
+
+  /* OFFERS */
+  .offers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 16px;
+  }
+
+  .offer-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 56px 52px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+  }
+
+  .offer-card.featured {
+    border-color: var(--border-accent);
+    background: var(--bg3);
+  }
+
+  .offer-card.featured::after {
+    content: 'RECOMMENDED';
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid var(--border-accent);
+    padding: 4px 10px;
+  }
+
+  .offer-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .offer-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .offer-tagline {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+
+  .offer-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 40px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .offer-price span {
+    font-size: 16px;
+    color: var(--text-muted);
+    letter-spacing: 0;
+  }
+
+  .offer-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 36px 0;
+  }
+
+  .offer-includes {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .offer-list {
+    list-style: none;
+  }
+
+  .offer-list li {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .offer-list li::before {
+    content: '✦';
+    color: var(--accent);
+    font-size: 8px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .offer-list li:last-child {
+    border-bottom: none;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    margin-top: 16px;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 32px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .timeline-item:last-child {
+    border-bottom: none;
+  }
+
+  .timeline-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg2);
+    border: 1px solid var(--border-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .timeline-content {
+    padding-top: 8px;
+  }
+
+  .timeline-content h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .timeline-content .time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .timeline-content p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* T&CS */
+  .tcs {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 56px 60px;
+  }
+
+  .tcs h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 36px;
+  }
+
+  .tc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .tc-item h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .tc-item p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(232,82,10,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+  }
+
+  .cta-contact {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .logo {
+    font-size: 12px;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* INTERSECTION OBSERVER CLASSES */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .header { padding: 24px 20px; }
+    .hero { padding: 60px 20px 50px; }
+    .hero h1 { font-size: 40px; }
+    .hero-sub { font-size: 16px; }
+    section { padding: 60px 20px; }
+    .divider { margin: 0 20px; width: calc(100% - 40px); }
+    .vision-grid { grid-template-columns: 1fr; gap: 2px; }
+    .vision-card { padding: 36px 28px; }
+    .offers-grid { grid-template-columns: 1fr; }
+    .offer-card { padding: 36px 24px; }
+    .offer-card.featured::after { display: none; }
+    .offer-name { font-size: 24px; }
+    .offer-price { font-size: 34px; }
+    .split { grid-template-columns: 1fr; gap: 40px; }
+    .split-divider { display: none; }
+    .split-block h2 { font-size: 26px; }
+    .tc-grid { grid-template-columns: 1fr; gap: 24px; }
+    .tcs { padding: 36px 20px; }
+    .cta-section { padding: 80px 20px; }
+    .cta-section h2 { font-size: 32px; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 16px; text-align: center; }
+    .quote-block { padding: 36px 20px; }
+    .quote-block blockquote { font-size: 20px; }
+    .timeline::before { left: 16px; }
+    .timeline-item { grid-template-columns: 48px 1fr; gap: 20px; padding: 32px 0; }
+    .timeline-dot { width: 32px; height: 32px; font-size: 10px; }
+    .timeline-content h3 { font-size: 18px; }
+    .section-label { font-size: 10px; }
+    /* Retainer note mobile */
+    div[style*="padding:40px 52px"] { padding: 28px 20px !important; flex-direction: column; gap: 16px; }
+  }
+
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 34px; }
+    .offer-price { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">Alchemy <span>ArtHouse</span></div>
+  <div class="header-glyph">✦</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Prepared for Clare — Reclaiming Agency</div>
+  <h1>Your world.<br><em>Built by you.</em><br>Felt by everyone.</h1>
+  <p class="hero-sub">A personal brand proposal for a breathwork practitioner who is ready to stop hiding in plain sight and start building something that lasts.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- WARM INTRO LETTER -->
+<section>
+  <div class="section-label">A note for Clare</div>
+  <div class="letter reveal">
+    <p>Clare, what you are building is not a content strategy. It is not a posting schedule. It is not even a brand in the conventional sense.</p>
+    <p>What you are building is a <strong>world.</strong> A world built on the belief that breath is the most radical act of reclamation available to any human being. That returning to the body is returning to power. That agency is not given, it is practised, one breath at a time.</p>
+    <p>You already know this. You live it. The work now is making sure the world can <em>feel it</em> too.</p>
+    <p>Right now, what you have is a practice and a vision. What you need is the clarity to articulate it, the visual language to express it, and the tools to share it consistently. Without that foundation, the work stays invisible. The people who need you most scroll past without knowing you exist.</p>
+    <p>This proposal is a roadmap to change that. Not overnight. Not with a hundred posts a week. But with intention, coherence, and a brand that is so true to you it practically runs itself.</p>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-block reveal">
+  <blockquote>The more real it becomes, the fewer people you will need to explain it to.</blockquote>
+  <div class="quote-attr">✦ World Building — Alchemy ArtHouse</div>
+</div>
+
+<!-- DREAM VISION -->
+<section>
+  <div class="section-label">The dream scenario</div>
+  <p style="font-size:18px; color:var(--text-muted); max-width:640px; line-height:1.9;" class="reveal">Close your eyes for a second. This is what we are building toward.</p>
+
+  <div class="vision-grid" style="margin-top:48px;">
+    <div class="vision-card reveal">
+      <div class="vision-num">01</div>
+      <h3>Your feed is your world</h3>
+      <p>Someone lands on your profile and immediately feels something. The aesthetic is unmistakable. The voice is yours. The energy is consistent. They follow before they have even read the bio.</p>
+    </div>
+    <div class="vision-card reveal">
+      <div class="vision-num">02</div>
+      <h3>Clients find you. You do not chase them.</h3>
+      <p>Because your content reflects who you actually are, it draws in the exact people ready for the work. No convincing needed. The brand does the qualifying for you.</p>
+    </div>
+    <div class="vision-card reveal">
+      <div class="vision-num">03</div>
+      <h3>You post with purpose, not pressure</h3>
+      <p>A clear system. Three content pillars. Templates already built and on-brand. You batch two hours on a Sunday and you are set for the week. No more blank page paralysis.</p>
+    </div>
+    <div class="vision-card reveal">
+      <div class="vision-num">04</div>
+      <h3>The brand grows as you grow</h3>
+      <p>Because it was built from your truth, not from trends. As your practice evolves, so does the content. The foundation never needs replacing. Just expanding.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM SOLUTION -->
+<section style="background: var(--bg2); margin: 0; padding-top: 80px; padding-bottom: 80px;">
+  <div style="max-width: 1100px;">
+    <div class="section-label">Where you are. Where we go.</div>
+    <div class="split">
+      <div class="split-block reveal">
+        <h2>The gap between<br>practice and presence</h2>
+        <p>You have the work. You have the experience. You have a point of view on breathwork that is genuinely different. But without a clear brand, all of that energy stays invisible to the people who need it most.</p>
+        <p>A scattered Instagram. No consistent aesthetic. No clear story. It makes it hard for the right people to find you, and hard for them to stay once they do.</p>
+        <p>Most practitioners in this space post when they feel inspired and go quiet when life gets busy. The result is a feed that looks like a personal diary when it should feel like a doorway into a world.</p>
+      </div>
+      <div class="split-divider"></div>
+      <div class="split-block reveal">
+        <h2>Clarity. Coherence.<br>A world with gravity.</h2>
+        <p>We start with the foundation. Who you are. What you stand for. The Jungian archetype your brand embodies. Your brand myth. Your visual world. All of it locked before a single post goes out.</p>
+        <p>Then we build the tools. Templates, content pillars, a posting framework that fits your life rather than consuming it.</p>
+        <p>The result is a brand that feels like a place. People enter it and feel something. That feeling is what builds community, trust, and eventually, a sustainable practice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFERS -->
+<section>
+  <div class="section-label">The work</div>
+  <p style="font-size:17px; color:var(--text-muted); max-width:560px; line-height:1.9; margin-bottom:16px;" class="reveal">Two tiers. Both built on the same foundation. The difference is how far we take it.</p>
+
+  <div class="offers-grid">
+
+    <!-- TIER 1 -->
+    <div class="offer-card reveal">
+      <div class="offer-tier">Tier One</div>
+      <div class="offer-name">Brand Foundation</div>
+      <div class="offer-tagline">Who you are, locked. What you look like, built.</div>
+      <div class="offer-price">$1,000 <span>AUD</span></div>
+
+      <div class="offer-divider"></div>
+      <div class="offer-includes">What is included</div>
+      <ul class="offer-list">
+        <li>Brand discovery session (60 min Zoom). We run the W.O.R.L.D. framework live with you. Archetype. Brand myth. Values. What you stand against. What you stand for.</li>
+        <li>Brand strategy document (8-12 pages). Positioning, tone of voice, origin story, content pillars, community language, and the reasoning behind all of it.</li>
+        <li>Visual identity. Colour palette, typography direction, curated moodboard (10+ images).</li>
+        <li>Logo or wordmark. Clean. Ownable. Designed to hold its ground at any size.</li>
+        <li>10 aesthetic images. Carousels and still imagery. Editorial quality. On-brand and ready to post.</li>
+        <li>Instagram bio copy and profile optimisation notes.</li>
+      </ul>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="offer-card featured reveal">
+      <div class="offer-tier">Tier Two</div>
+      <div class="offer-name">Brand Launch</div>
+      <div class="offer-tagline">Everything in Tier One, plus the system to run it.</div>
+      <div class="offer-price">$2,000 <span>AUD</span></div>
+
+      <div class="offer-divider"></div>
+      <div class="offer-includes">What is included</div>
+      <ul class="offer-list">
+        <li>Everything in Brand Foundation.</li>
+        <li>6 branded Instagram post templates in Canva. Fully on-brand, editable, built for your three content pillars.</li>
+        <li>3 carousel templates. Designed for saves and shares. Educational, value-led, scroll-stopping.</li>
+        <li>5 Instagram Story templates. Branded, consistent, effortless to update.</li>
+        <li>Content direction guide. Three pillars, caption framework, posting rhythm, and what to save for a future paid offer.</li>
+        <li>Content ritual guide (one page). How to batch a week of content in two hours. Built for your life, not a social media manager's.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- RETAINER NOTE -->
+  <div style="margin-top:2px; background:var(--bg2); border:1px solid var(--border); padding:40px 52px; display:flex; align-items:flex-start; gap:32px;" class="reveal">
+    <div style="font-family:'DM Mono',monospace; font-size:24px; color:var(--accent); flex-shrink:0;">✦</div>
+    <div>
+      <div style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.15em; color:var(--accent); text-transform:uppercase; margin-bottom:12px;">Looking ahead</div>
+      <p style="font-size:15px; color:var(--text-muted); line-height:1.8;">Once you are live and posting, a monthly content support retainer is available. New images, caption refresh, and one carousel per month. From $400-500 AUD/month. Subscribe or cancel anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section style="background: var(--bg2); margin: 0; padding-top: 80px; padding-bottom: 80px;">
+  <div class="section-label">Timeline</div>
+  <p style="font-size:17px; color:var(--text-muted); max-width:520px; line-height:1.9; margin-bottom:16px;" class="reveal">Built for speed. You will not be waiting.</p>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">01</div>
+      <div class="timeline-content">
+        <div class="time">Day 1</div>
+        <h3>Discovery Session</h3>
+        <p>60 minute Zoom. We map your brand world together. Archetype, origin story, values, visual direction. You leave the call already clearer than when you arrived.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">02</div>
+      <div class="timeline-content">
+        <div class="time">Days 2-5</div>
+        <h3>Strategy and Identity Build</h3>
+        <p>Brand strategy document drafted. Visual identity developed. Logo created. Moodboard and aesthetic direction confirmed.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">03</div>
+      <div class="timeline-content">
+        <div class="time">Days 5-7</div>
+        <h3>Review and Refine</h3>
+        <p>One round of revisions included. We tighten anything that does not feel exactly right. This is your world. It needs to feel like home.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">04</div>
+      <div class="timeline-content">
+        <div class="time">Days 7-10 (Tier Two only)</div>
+        <h3>Templates and Content System</h3>
+        <p>All Canva templates built and delivered. Content direction guide and ritual guide completed. Full handover package ready.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">✦</div>
+      <div class="timeline-content">
+        <div class="time">Day 10</div>
+        <h3>You launch.</h3>
+        <p>Everything handed over. Assets delivered. You have what you need to show up consistently, confidently, and on-brand from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- T&Cs -->
+<section>
+  <div class="section-label">Important details</div>
+  <div class="tcs reveal">
+    <h2>Terms and Conditions</h2>
+    <div class="tc-grid">
+      <div class="tc-item">
+        <h4>Payment</h4>
+        <p>100% payment required upfront to confirm the project and book your discovery session. Work begins once payment is received.</p>
+      </div>
+      <div class="tc-item">
+        <h4>Revisions</h4>
+        <p>One round of revisions included across all deliverables. Additional revision rounds available at $150 AUD per round.</p>
+      </div>
+      <div class="tc-item">
+        <h4>Turnaround</h4>
+        <p>Brand Foundation delivered within 7 days of discovery session. Brand Launch delivered within 10 days. Timeline begins once deposit is received.</p>
+      </div>
+      <div class="tc-item">
+        <h4>Your input</h4>
+        <p>We need you responsive and available. Discovery session attendance is required. Feedback on drafts within 48 hours keeps the timeline on track.</p>
+      </div>
+      <div class="tc-item">
+        <h4>Ownership</h4>
+        <p>All assets are yours on final payment. Full files delivered. No lock-in, no ongoing fees unless you choose the retainer.</p>
+      </div>
+      <div class="tc-item">
+        <h4>Cancellation</h4>
+        <p>Payment is non-refundable once the discovery session has been completed and strategy work has begun.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <div class="section-label" style="justify-content:center;">Ready when you are</div>
+  <h2>The world is not going to build itself.</h2>
+  <p>Reply to this proposal or reach out directly. We will lock in your discovery session and get moving.</p>
+  <div class="cta-contact">hello@alchemyart.house</div>
+  <div style="margin-top:60px; font-family:'DM Mono',monospace; font-size:14px; color:var(--text-muted); letter-spacing:0.05em;">✦ &nbsp; Alchemy ArtHouse &nbsp; ✦ &nbsp; Byron Bay, NSW &nbsp; ✦ &nbsp; alchemyarthouse.com</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Alchemy <span>ArtHouse</span></div>
+  <p>Confidential — Prepared for Clare / Reclaiming Agency</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
